@@ -45,6 +45,7 @@ namespace MahAppsNotThreadSafe
 		private static Dispatcher appResourcesDispatcher;
 		private static ResourceDictionary appResourcesDictionary;
 		private static Uri[] appResources;
+		private static bool hasAppResourcesMerged;
 
 
 		/// <summary>
@@ -118,6 +119,21 @@ namespace MahAppsNotThreadSafe
 			}
 		}
 
+		private static Uri[] getCurrentAppResources()
+			=> ThreadLocalResourceDictionary.appResourcesDictionary.MergedDictionaries.TakeWhile(
+					rd => {
+						if (string.IsNullOrWhiteSpace(rd.Source?.ToString())) {
+							Trace.TraceError(
+									$"{typeof(ThreadLocalResourceDictionary).Name} "
+									+ $"merged ResourceDictionary has null or whitespace Uri: {rd}");
+							Debug.Fail(
+									$"{typeof(ThreadLocalResourceDictionary).Name} "
+									+ $"merged ResourceDictionary has null or whitespace Uri: {rd}");
+							return false;
+						}
+						return true;
+					}).Select(rd => rd.Source).ToArray();
+
 
 		private bool isAppResources;
 
@@ -150,8 +166,13 @@ namespace MahAppsNotThreadSafe
 				threadLocal.AddValue(
 						dispatcher,
 						new WeakReference<ThreadLocalResourceDictionary>(this));
-				if (ThreadLocalResourceDictionary.appResources == null)
+				if (ThreadLocalResourceDictionary.appResourcesDictionary == null)
 					return;
+				if (!ThreadLocalResourceDictionary.hasAppResourcesMerged) {
+					ThreadLocalResourceDictionary.appResources
+							= ThreadLocalResourceDictionary.getCurrentAppResources();
+					ThreadLocalResourceDictionary.hasAppResourcesMerged = true;
+				}
 				mergeUris = new Uri[ThreadLocalResourceDictionary.appResources.Length];
 				ThreadLocalResourceDictionary.appResources.CopyTo(mergeUris, 0);
 				targets = ThreadLocalResourceDictionary.getPrunedThreadLocalDictionaries(threadLocal, dispatcher);
@@ -182,20 +203,7 @@ namespace MahAppsNotThreadSafe
 					return;
 
 				List<Uri> oldAppResources = new List<Uri>(ThreadLocalResourceDictionary.appResources);
-				Uri[] allResources
-						= MergedDictionaries.TakeWhile(
-								rd => {
-									if (string.IsNullOrWhiteSpace(rd.Source?.ToString())) {
-										Trace.TraceError(
-												$"{GetType().Name} "
-												+ $"merged ResourceDictionary has null or whitespace Uri: {rd}");
-										Debug.Fail(
-												$"{GetType().Name} "
-												+ $"merged ResourceDictionary has null or whitespace Uri: {rd}");
-										return false;
-									}
-									return true;
-								}).Select(rd => rd.Source).ToArray();
+				Uri[] allResources = ThreadLocalResourceDictionary.getCurrentAppResources();
 				foreach (Uri mergedUri in allResources) {
 					oldAppResources.Remove(mergedUri);
 				}
