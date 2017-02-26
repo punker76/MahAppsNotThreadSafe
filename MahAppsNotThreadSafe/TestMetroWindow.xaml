@@ -1,0 +1,97 @@
+﻿<controls:MetroWindow x:Class="MahAppsNotThreadSafe.TestMetroWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+		xmlns:mahAppsNotThreadSafe="clr-namespace:MahAppsNotThreadSafe"
+		mc:Ignorable="d"
+		Title="Metro Window"
+		SizeToContent="WidthAndHeight">
+
+	<!--
+		Adding the ThreadLocalResourceDictionary ensures the window gets
+		a ThreadLocal copy of the resources defined in App.xaml
+	-->
+	<controls:MetroWindow.Resources>
+		<mahAppsNotThreadSafe:ThreadLocalResourceDictionary />
+	</controls:MetroWindow.Resources>
+
+	<DockPanel>
+		<ToolBarTray DockPanel.Dock="Top">
+			<ToolBar Band="0"
+					BandIndex="0">
+				<Button Content="Does Nothing" />
+			</ToolBar>
+		</ToolBarTray>
+
+
+		<StackPanel Orientation="Horizontal"
+				Margin="24"
+				DockPanel.Dock="Bottom">
+			<StackPanel HorizontalAlignment="Center">
+				<Label Content="Enable / Visible" />
+				<controls:ToggleSwitch Header="Win10 Style"
+						IsChecked="True"
+						OffLabel="Disabled"
+						OnLabel="Enabled" />
+				<controls:ToggleSwitch IsChecked="False"
+						OffLabel="Collapsed"
+						OnLabel="Visible" />
+				<controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}" />
+
+				<controls:ToggleSwitch IsChecked="True"
+						IsEnabled="False" />
+				<controls:ToggleSwitch IsChecked="False"
+						IsEnabled="False" />
+			</StackPanel>
+
+
+			<StackPanel Width="300">
+				<Label Content="RichTextBox" />
+				<RichTextBox Padding="5"
+						controls:TextBoxHelper.IsSpellCheckContextMenuEnabled="True"
+						IsDocumentEnabled="True">
+					<FlowDocument>
+						<Paragraph>
+							<Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+								<Run Text="Normal" />
+							</Hyperlink>
+							<LineBreak />
+							<Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+						</Paragraph>
+					</FlowDocument>
+				</RichTextBox>
+				<RichTextBox Padding="5"
+						IsDocumentEnabled="True"
+						IsReadOnly="True">
+					<FlowDocument>
+						<Paragraph>
+							<Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+								<Run Text="ReadOnly" />
+							</Hyperlink>
+							<LineBreak />
+							<Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+						</Paragraph>
+					</FlowDocument>
+				</RichTextBox>
+				<RichTextBox Padding="5"
+						IsDocumentEnabled="True"
+						IsEnabled="False">
+					<FlowDocument>
+						<Paragraph>
+							<Hyperlink NavigateUri="https://github.com/MahApps/MahApps.Metro">
+								<Run Text="Disabled" />
+							</Hyperlink>
+							<LineBreak />
+							<Run>Bacon ipsum dolor sit amet venison drumstick meatball ham hock corned beef. Strip steak bacon andouille pig beef short ribs.</Run>
+						</Paragraph>
+					</FlowDocument>
+				</RichTextBox>
+			</StackPanel>
+		</StackPanel>
+	</DockPanel>
+</controls:MetroWindow>
+
+
+
