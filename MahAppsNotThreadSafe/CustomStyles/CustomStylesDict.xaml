@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls">
+
+    <Style x:Key="LightAccentGroupBoxStyle" BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="GroupBox">
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{DynamicResource AccentBaseColor}" Opacity=".3" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentColorBrush3}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="controls:ControlsHelper.HeaderFontWeight" Value="Bold" />
+        <Setter Property="controls:GroupBoxHelper.HeaderForeground" Value="{DynamicResource ResourceKey=BlackBrush}" />
+    </Style>
+
+</ResourceDictionary>

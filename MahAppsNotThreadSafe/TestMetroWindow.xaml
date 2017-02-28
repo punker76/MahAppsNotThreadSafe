@@ -29,22 +29,17 @@
 		<StackPanel Orientation="Horizontal"
 				Margin="24"
 				DockPanel.Dock="Bottom">
-			<StackPanel HorizontalAlignment="Center">
-				<Label Content="Enable / Visible" />
-				<controls:ToggleSwitch Header="Win10 Style"
-						IsChecked="True"
-						OffLabel="Disabled"
-						OnLabel="Enabled" />
-				<controls:ToggleSwitch IsChecked="False"
-						OffLabel="Collapsed"
-						OnLabel="Visible" />
-				<controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}" />
+            <GroupBox Header="Test" Style="{DynamicResource LightAccentGroupBoxStyle}">
+                <StackPanel HorizontalAlignment="Center">
+                    <Label Content="Enable / Visible" />
+                    <controls:ToggleSwitch Header="Win10 Style" IsChecked="True" OffLabel="Disabled" OnLabel="Enabled" />
+                    <controls:ToggleSwitch IsChecked="False" OffLabel="Collapsed" OnLabel="Visible" />
+                    <controls:ToggleSwitch IsEnabled="{Binding ElementName=enabledSwitch, Path=IsChecked}" />
 
-				<controls:ToggleSwitch IsChecked="True"
-						IsEnabled="False" />
-				<controls:ToggleSwitch IsChecked="False"
-						IsEnabled="False" />
-			</StackPanel>
+                    <controls:ToggleSwitch IsChecked="True" IsEnabled="False" />
+                    <controls:ToggleSwitch IsChecked="False" IsEnabled="False" />
+                </StackPanel>
+            </GroupBox>
 
 
 			<StackPanel Width="300">

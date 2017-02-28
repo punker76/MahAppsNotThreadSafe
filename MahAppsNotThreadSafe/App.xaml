@@ -20,9 +20,10 @@
 				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/colors.xaml" />
 				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/accents/cobalt.xaml" />
 				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/styles/accents/baselight.xaml" />
-				
 
-				<!--
+                <ResourceDictionary Source="pack://application:,,,/MahAppsNotThreadSafe;component/CustomStyles/CustomStylesDict.xaml" />
+
+                <!--
 					The Material Design theme WILL run!
 				-->
 				<!--<ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -49,7 +50,12 @@
 
 			</ResourceDictionary.MergedDictionaries>
 
-			<!-- MahApps Brushes (For Material Design MahApps Theme) -->
+            <!--
+	LightAccent GroupBox Style
+-->
+            
+
+            <!-- MahApps Brushes (For Material Design MahApps Theme) -->
 			<!--<SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource Primary700}"/>
 			<SolidColorBrush x:Key="AccentColorBrush" Color="{DynamicResource Primary500}"/>
 			<SolidColorBrush x:Key="AccentColorBrush2" Color="{DynamicResource Primary400}"/>
